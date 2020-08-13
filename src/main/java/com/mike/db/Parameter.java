@@ -21,13 +21,20 @@ public class Parameter
 
 	@Getter
 	@NotNull
-	private String descritpion;
+	private String description;
 
-	@ManyToMany(fetch = FetchType.LAZY,
-			cascade = {
-				CascadeType.PERSIST,
-				CascadeType.MERGE
-			})
-	@JoinColumn(name="parameterId")
-	private Set<Item> parameterIds;
+	@ManyToMany(
+			mappedBy = "parameters"
+	)
+	private Set<Item> items;
+
+	public Parameter()
+	{
+	}
+
+	public Parameter(String value, String description)
+	{
+		this.value = value;
+		this.description = description;
+	}
 }

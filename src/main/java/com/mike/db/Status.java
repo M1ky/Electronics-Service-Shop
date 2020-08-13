@@ -16,4 +16,13 @@ public class Status
 	@NotNull
 	@Column(unique = true)
 	private String status;
+
+	public Status()
+	{
+	}
+
+	public Status(String status)
+	{
+		this.status = status;
+	}
 }

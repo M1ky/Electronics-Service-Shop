@@ -2,6 +2,8 @@ package com.mike.db;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -24,19 +26,28 @@ public class Item
 	@Column(unique = true)
 	private String model;
 
-	@Getter
+	@Getter @Setter
 	private String comment;
 
-	@Getter
+	@Getter @Setter
 	private Long serialNr;
 
-	@ManyToMany(fetch = FetchType.LAZY,
-			cascade = {
-					CascadeType.PERSIST,
-					CascadeType.MERGE
-			})
-	@JoinTable(name="connector_item_parameter",
-			joinColumns = { @JoinColumn(name="itemId") },
-			inverseJoinColumns = { @JoinColumn(name="parameterId") })
-	private Set<Parameter> itemIds;
+	@ManyToMany
+	@JoinTable(
+			name = "item_parameters",
+			joinColumns = @JoinColumn(name = "item_id"),
+			inverseJoinColumns = @JoinColumn(name = "parameter_id")
+	)
+	private Set<Parameter> parameters;
+
+	public Item()
+	{
+	}
+
+	public Item(String category, String model)
+	{
+		this.category = category;
+		this.model = model;
+	}
+
 }
