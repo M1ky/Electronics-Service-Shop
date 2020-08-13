@@ -17,17 +17,17 @@ public class Parameter
 	@Getter
 	@NotNull
 	@Column(unique = true)
-	private String key;
+	private String value;
 
 	@Getter
 	@NotNull
-	private String value;
+	private String descritpion;
 
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade = {
 				CascadeType.PERSIST,
 				CascadeType.MERGE
-			},
-			mappedBy = "item")
-	private Set<Item> itemIds;
+			})
+	@JoinColumn(name="parameterId")
+	private Set<Item> parameterIds;
 }

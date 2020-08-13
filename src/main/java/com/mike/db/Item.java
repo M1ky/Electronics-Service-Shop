@@ -10,7 +10,6 @@ import java.util.Set;
 @Table(name = "item")
 public class Item
 {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -35,7 +34,9 @@ public class Item
 			cascade = {
 					CascadeType.PERSIST,
 					CascadeType.MERGE
-			},
-			mappedBy = "parameter")
-	private Set<Parameter> parameterIds;
+			})
+	@JoinTable(name="connector_item_parameter",
+			joinColumns = { @JoinColumn(name="itemId") },
+			inverseJoinColumns = { @JoinColumn(name="parameterId") })
+	private Set<Parameter> itemIds;
 }
