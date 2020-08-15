@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navBarFragment}" />
+
+    <div align="center">
+        <h3>Podaj dane nowego parametru</h3>
+        <form th:action="@{__${T(com.mike.util.PageMappings).ADD_PARAMETER}__}"
+              th:object="${parameter}" method="post" >
+
+            <input type="hidden" th:field="*{id}"/>
+
+            <label for="value">Wartość</label>
+            <input id="value" type="text" th:field="*{value}"/>
+            <br>
+
+            <label for="description">Opis</label>
+            <input id="description" type="text" th:field="*{description}"/>
+            <br>
+
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+<div th:replace="~{fragments/footer :: footerFragment}" />
+</body>
+</html>

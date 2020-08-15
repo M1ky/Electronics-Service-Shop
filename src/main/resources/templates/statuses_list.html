@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navBarFragment}" />
+
+    <div align="center">
+        <a th:href="@{__${T(com.mike.util.PageMappings).ADD_STATUS}__}">Dodaj nowy status</a>
+    </div>
+
+
+    <table border="1" align="center">
+        <tr>
+            <th>Id</th>
+            <th>Status</th>
+            <th>Edytuj</th>
+            <th>Usuń</th>
+        </tr>
+
+        <tr th:each="status : ${statuses}">
+            <td th:text="${status.id}"></td>
+            <td th:text="${status.status}"></td>
+            <td>
+                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_STATUS}(statusId=${status.id})}">
+                    <button type="submit" name="submit">Edytuj</button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_STATUS}(statusId=${status.id})}">
+                    <button type="submit" name="submit">Usuń</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+<div th:replace="~{fragments/footer :: footerFragment}" />
+</body>
+</html>

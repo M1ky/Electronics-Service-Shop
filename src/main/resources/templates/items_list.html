@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navBarFragment}" />
+
+    <div align="center">
+        <a th:href="@{__${T(com.mike.util.PageMappings).ADD_ITEM}__}">Dodaj nowy przedmiot</a>
+    </div>
+
+
+    <table border="1" align="center">
+        <tr>
+            <th>Id</th>
+            <th>Kategoria</th>
+            <th>Model</th>
+            <th>Komentarz</th>
+            <th>Numer seryjny</th>
+            <th>Edytuj</th>
+            <th>Usuń</th>
+        </tr>
+
+        <tr th:each="item : ${items}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.category}"></td>
+            <td th:text="${item.model}"></td>
+            <td th:text="${item.comment}"></td>
+            <td th:text="${item.serialNr}"></td>
+            <td>
+                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_ITEM}(itemId=${item.id})}">
+                    <button type="submit" name="submit">Edytuj</button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_ITEM}(itemId=${item.id})}">
+                    <button type="submit" name="submit">Usuń</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+<div th:replace="~{fragments/footer :: footerFragment}" />
+</body>
+</html>

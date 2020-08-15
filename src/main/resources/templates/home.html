@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: headFragment}">
 </head>
-<body th:replace="~{fragments/navbar :: navBarFragment}">
+<body>
+    <div th:replace="~{fragments/navbar :: navBarFragment}" />
     <div align="center">
         <h1>Welcome to the Web Electronics Service Shop W.E.O.S</h1>
     </div>
 
-    <script src="/bootstrap-4.5.0/js/bootstrap.min.js"></script>
 
     <div th:replace="~{fragments/footer :: footerFragment}" />
 </body>

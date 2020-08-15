@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navBarFragment}"></div>
+
+<div align="center">
+	<a th:href="@{__${T(com.mike.util.PageMappings).ADD_PARAMETER}__}">Dodaj nowy parametr</a>
+</div>
+
+
+<table border="1" align="center">
+	<tr>
+		<th>Id</th>
+		<th>Wartość</th>
+		<th>Opis</th>
+		<th>Edytuj</th>
+		<th>Usuń</th>
+	</tr>
+
+	<tr th:each="parameter : ${parameters}">
+		<td th:text="${parameter.id}"></td>
+		<td th:text="${parameter.value}"></td>
+		<td th:text="${parameter.description}"></td>
+		<td>
+			<form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_PARAMETER}(parameterId=${parameter.id})}">
+				<button type="submit" name="submit">Edytuj</button>
+			</form>
+		</td>
+		<td>
+			<form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_PARAMETER}(parameterId=${parameter.id})}">
+				<button type="submit" name="submit">Usuń</button>
+			</form>
+		</td>
+	</tr>
+</table>
+
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
+</body>
+</html>

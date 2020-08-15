@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navBarFragment}" />
+
+    <div align="center">
+        <h3>Podaj dane nowego statusu</h3>
+        <form th:action="@{__${T(com.mike.util.PageMappings).ADD_STATUS}__}"
+              th:object="${status}" method="post" >
+
+            <input type="hidden" th:field="*{id}"/>
+
+            <label for="status">Status</label>
+            <input id="status" type="text" th:field="*{status}"/>
+            <br>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+<div th:replace="~{fragments/footer :: footerFragment}" />
+</body>
+</html>

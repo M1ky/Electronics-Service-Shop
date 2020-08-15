@@ -1,10 +1,12 @@
-package com.mike.db;
+package com.mike.db.entities;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.*;
 
+@Data
 @Entity
 public class Status
 {
@@ -12,7 +14,6 @@ public class Status
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Getter
 	@NotNull
 	@Column(unique = true)
 	private String status;
@@ -24,5 +25,11 @@ public class Status
 	public Status(String status)
 	{
 		this.status = status;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Status{" + "id=" + id + ", status='" + status + '\'' + '}';
 	}
 }

@@ -1,11 +1,13 @@
-package com.mike.db;
+package com.mike.db.entities;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "parameter")
 public class Parameter
@@ -14,12 +16,10 @@ public class Parameter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Getter
 	@NotNull
 	@Column(unique = true)
 	private String value;
 
-	@Getter
 	@NotNull
 	private String description;
 
@@ -36,5 +36,16 @@ public class Parameter
 	{
 		this.value = value;
 		this.description = description;
+	}
+
+	@Override
+	public String toString()
+	{
+		//@formatter:off
+		return "Parameter{" + "id=" + id +
+				", value='" + value + '\'' +
+				", description='" + description + '\'' +
+				", items=" + items + '}';
+		//@formatter:on
 	}
 }
