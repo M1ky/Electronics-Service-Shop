@@ -1,11 +1,14 @@
 package com.mike.controller;
 
 import com.mike.db.entities.Item;
+import com.mike.db.entities.Status;
 import com.mike.service.ItemService;
+import com.mike.service.StatusService;
 import com.mike.util.PageMappings;
 import com.mike.util.ViewNames;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +23,13 @@ import java.util.Optional;
 public class ItemController
 {
 	private final ItemService itemService;
+	private final StatusService statusService;
 
 	@Autowired
-	public ItemController(ItemService itemService)
+	public ItemController(ItemService itemService, StatusService statusService)
 	{
 		this.itemService = itemService;
+		this.statusService = statusService;
 	}
 
 	@GetMapping(PageMappings.ITEMS_LIST)
@@ -39,6 +44,8 @@ public class ItemController
 	public String addItem(Model model)
 	{
 		model.addAttribute("item", new Item());
+		Iterable<Status> statuses = statusService.findAll();
+		model.addAttribute("statuses", statuses);
 		return ViewNames.ADD_ITEM;
 	}
 
@@ -62,6 +69,7 @@ public class ItemController
 		existingItem.setComment(item.getComment());
 		existingItem.setModel(item.getModel());
 		existingItem.setSerialNr(item.getSerialNr());
+		existingItem.setStatus(item.getStatus());
 		itemService.save(existingItem);
 
 		return PageMappings.REDIRECT_ITEMS_LIST;
@@ -72,6 +80,8 @@ public class ItemController
 	{
 		Optional<Item> existingItem = itemService.findById(itemId);
 		model.addAttribute("item", existingItem.isPresent() ? existingItem.get() : "");
+		Iterable<Status> statuses = statusService.findAll();
+		model.addAttribute("statuses", statuses);
 		return ViewNames.ADD_ITEM;
 	}
 

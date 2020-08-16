@@ -17,6 +17,7 @@
             <th>Model</th>
             <th>Komentarz</th>
             <th>Numer seryjny</th>
+            <th>Status</th>
             <th>Edytuj</th>
             <th>Usuń</th>
         </tr>
@@ -27,6 +28,7 @@
             <td th:text="${item.model}"></td>
             <td th:text="${item.comment}"></td>
             <td th:text="${item.serialNr}"></td>
+            <td th:text="${item.status?.statusVal}"></td>
             <td>
                 <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_ITEM}(itemId=${item.id})}">
                     <button type="submit" name="submit">Edytuj</button>

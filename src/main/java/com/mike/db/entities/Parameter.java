@@ -17,7 +17,6 @@ public class Parameter
 	private Long id;
 
 	@NotNull
-	@Column(unique = true)
 	private String value;
 
 	@NotNull

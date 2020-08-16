@@ -59,7 +59,7 @@ public class StatusController
 			return PageMappings.REDIRECT_STATUSES_LIST;
 		}
 		Status existingStatus = existingStatusOptional.get();
-		existingStatus.setStatus(status.getStatus());
+		existingStatus.setStatusVal(status.getStatusVal());
 		statusService.save(existingStatus);
 
 		return PageMappings.REDIRECT_STATUSES_LIST;

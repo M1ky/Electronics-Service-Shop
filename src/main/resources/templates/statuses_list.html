@@ -20,7 +20,7 @@
 
         <tr th:each="status : ${statuses}">
             <td th:text="${status.id}"></td>
-            <td th:text="${status.status}"></td>
+            <td th:text="${status.statusVal}"></td>
             <td>
                 <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_STATUS}(statusId=${status.id})}">
                     <button type="submit" name="submit">Edytuj</button>

@@ -16,20 +16,20 @@ public class Status
 
 	@NotNull
 	@Column(unique = true)
-	private String status;
+	private String statusVal;
 
 	public Status()
 	{
 	}
 
-	public Status(String status)
+	public Status(String statusVal)
 	{
-		this.status = status;
+		this.statusVal = statusVal;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Status{" + "id=" + id + ", status='" + status + '\'' + '}';
+		return "Status{" + "id=" + id + ", status='" + statusVal + '\'' + '}';
 	}
 }

@@ -33,6 +33,10 @@ public class Item
 	@JoinTable(name = "item_parameters", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "parameter_id"))
 	private Set<Parameter> parameters;
 
+	@ManyToOne
+	@JoinColumn(name = "status_id")
+	private Status status;
+
 	public Item()
 	{
 	}
