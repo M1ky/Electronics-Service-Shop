@@ -5,12 +5,13 @@
 <body>
 <div th:replace="~{fragments/navbar :: navBarFragment}" />
 
+    <br>
     <div align="center">
         <a th:href="@{__${T(com.mike.util.PageMappings).ADD_STATUS}__}">Dodaj nowy status</a>
     </div>
+    <br>
 
-
-    <table border="1" align="center">
+    <table class="table" border="1" align="center">
         <tr>
             <th>Id</th>
             <th>Status</th>

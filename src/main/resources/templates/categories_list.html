@@ -5,12 +5,13 @@
 <body>
 <div th:replace="~{fragments/navbar :: navBarFragment}" />
 
+    <br>
     <div align="center">
         <a th:href="@{__${T(com.mike.util.PageMappings).ADD_CATEGORY}__}">Dodaj nową kategorię sprzętu</a>
     </div>
+    <br>
 
-
-    <table border="1" align="center">
+    <table class="table" border="1" align="center">
         <tr>
             <th>Id</th>
             <th>Kategoria</th>
@@ -22,12 +23,12 @@
             <td th:text="${category.id}"></td>
             <td th:text="${category.categoryValue}"></td>
             <td>
-                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_CATEGORY}(itemId=${category.id})}">
+                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_CATEGORY}(categoryId=${category.id})}">
                     <button type="submit" name="submit">Edytuj</button>
                 </form>
             </td>
             <td>
-                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_CATEGORY}(itemId=${category.id})}">
+                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_CATEGORY}(categoryId=${category.id})}">
                     <button type="submit" name="submit">Usuń</button>
                 </form>
             </td>

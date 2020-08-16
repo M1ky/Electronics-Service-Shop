@@ -5,12 +5,13 @@
 <body>
 <div th:replace="~{fragments/navbar :: navBarFragment}"></div>
 
+<br>
 <div align="center">
 	<a th:href="@{__${T(com.mike.util.PageMappings).ADD_PARAMETER}__}">Dodaj nowy parametr</a>
 </div>
+<br>
 
-
-<table border="1" align="center">
+<table class="table" border="1" align="center">
 	<tr>
 		<th>Id</th>
 		<th>Wartość</th>
