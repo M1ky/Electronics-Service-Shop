@@ -13,7 +13,13 @@
             <input type="hidden" th:field="${item.id}"/>
 
             <label for="category">Kategoria</label>
-            <input id="category" type="text" th:field="${item.category}"/>
+            <select id="category" name="category">
+                <option value="0">Wybierz kategorię</option>
+                <option type="number" th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.categoryValue}"
+                        th:field="${item.category}"></option>
+            </select>
             <br>
 
             <label for="model">Model</label>
@@ -30,13 +36,20 @@
 
             <label for="status">Status</label>
             <select id="status" name="status">
-                <option value="0">wybierz status</option>
+                <option value="0">Wybierz status</option>
                 <option type="number" th:each="status : ${statuses}"
                         th:value="${status.id}"
                         th:text="${status.statusVal}"
                         th:field="${item.status}"></option>
             </select>
-            <br>
+
+            <br><br>
+            <button type="button" class="btn btn-success" th:onclick="addRow()">Dodaj parameter</button>
+            <button type="button" class="btn btn-danger" th:onclick="showAlert()">Usuń parametr</button>
+            <br><br>
+
+
+            <br><br><br>
             <input type="submit" value="Submit"/>
         </form>
     </div>

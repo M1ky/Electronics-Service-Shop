@@ -9,8 +9,10 @@ public final class PageMappings
 	public static final String ITEMS_LIST = "items_list";
 	public static final String ADD_ITEM = "add_item";
 	public static final String EDIT_ITEM = "edit_item";
+	public static final String VIEW_ITEM = "view_item";
 	public static final String DELETE_ITEM = "delete_item";
 	public static final String REDIRECT_ITEMS_LIST = "redirect:/" + ITEMS_LIST;
+
 
 	// == PARAMETERS ==
 	public static final String PARAMETERS_LIST = "parameters_list";
@@ -26,5 +28,13 @@ public final class PageMappings
 	public static final String EDIT_STATUS = "edit_status";
 	public static final String DELETE_STATUS = "delete_status";
 	public static final String REDIRECT_STATUSES_LIST = "redirect:/" + STATUSES_LIST;
+
+
+	// == CATEGORIES ==
+	public static final String CATEGORIES_LIST = "categories_list";
+	public static final String ADD_CATEGORY = "add_category";
+	public static final String EDIT_CATEGORY = "edit_category";
+	public static final String DELETE_CATEGORY = "delete_category";
+	public static final String REDIRECT_CATEGORIES_LIST = "redirect:/" + CATEGORIES_LIST;
 
 }

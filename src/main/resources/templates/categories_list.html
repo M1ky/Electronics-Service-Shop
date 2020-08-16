@@ -6,7 +6,7 @@
 <div th:replace="~{fragments/navbar :: navBarFragment}" />
 
     <div align="center">
-        <a th:href="@{__${T(com.mike.util.PageMappings).ADD_ITEM}__}">Dodaj nowy przedmiot</a>
+        <a th:href="@{__${T(com.mike.util.PageMappings).ADD_CATEGORY}__}">Dodaj nową kategorię sprzętu</a>
     </div>
 
 
@@ -14,28 +14,20 @@
         <tr>
             <th>Id</th>
             <th>Kategoria</th>
-            <th>Model</th>
-            <th>Komentarz</th>
-            <th>Numer seryjny</th>
-            <th>Status</th>
             <th>Edytuj</th>
             <th>Usuń</th>
         </tr>
 
-        <tr th:each="item : ${items}">
-            <td th:text="${item.id}"></td>
-            <td th:text="${item.category?.categoryValue}"></td>
-            <td th:text="${item.model}"></td>
-            <td th:text="${item.comment}"></td>
-            <td th:text="${item.serialNr}"></td>
-            <td th:text="${item.status?.statusVal}"></td>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.categoryValue}"></td>
             <td>
-                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_ITEM}(itemId=${item.id})}">
+                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_CATEGORY}(itemId=${category.id})}">
                     <button type="submit" name="submit">Edytuj</button>
                 </form>
             </td>
             <td>
-                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_ITEM}(itemId=${item.id})}">
+                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_CATEGORY}(itemId=${category.id})}">
                     <button type="submit" name="submit">Usuń</button>
                 </form>
             </td>

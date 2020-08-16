@@ -1,14 +1,17 @@
 package com.mike.controller;
 
+import com.mike.db.entities.Category;
 import com.mike.db.entities.Item;
+import com.mike.db.entities.Parameter;
 import com.mike.db.entities.Status;
+import com.mike.service.CategoryService;
 import com.mike.service.ItemService;
+import com.mike.service.ParameterService;
 import com.mike.service.StatusService;
 import com.mike.util.PageMappings;
 import com.mike.util.ViewNames;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +27,16 @@ public class ItemController
 {
 	private final ItemService itemService;
 	private final StatusService statusService;
+	private final ParameterService parameterService;
+	private final CategoryService categoryService;
 
 	@Autowired
-	public ItemController(ItemService itemService, StatusService statusService)
+	public ItemController(ItemService itemService, StatusService statusService, ParameterService parameterService, CategoryService categoryService)
 	{
 		this.itemService = itemService;
 		this.statusService = statusService;
+		this.parameterService = parameterService;
+		this.categoryService = categoryService;
 	}
 
 	@GetMapping(PageMappings.ITEMS_LIST)
@@ -44,9 +51,21 @@ public class ItemController
 	public String addItem(Model model)
 	{
 		model.addAttribute("item", new Item());
+
+		addAttributes(model);
+		return ViewNames.ADD_ITEM;
+	}
+
+	private void addAttributes(Model model)
+	{
 		Iterable<Status> statuses = statusService.findAll();
 		model.addAttribute("statuses", statuses);
-		return ViewNames.ADD_ITEM;
+
+		Iterable<Parameter> parameters = parameterService.findAll();
+		model.addAttribute("parameters", parameters);
+
+		Iterable<Category> categories = categoryService.findAll();
+		model.addAttribute("categories", categories);
 	}
 
 	@PostMapping(PageMappings.ADD_ITEM)
@@ -80,8 +99,8 @@ public class ItemController
 	{
 		Optional<Item> existingItem = itemService.findById(itemId);
 		model.addAttribute("item", existingItem.isPresent() ? existingItem.get() : "");
-		Iterable<Status> statuses = statusService.findAll();
-		model.addAttribute("statuses", statuses);
+
+		addAttributes(model);
 		return ViewNames.ADD_ITEM;
 	}
 

@@ -13,4 +13,8 @@ public final class ViewNames
 
 	public static final String ADD_STATUS = "add_status";
 	public static final String STATUES_LIST = "statuses_list";
+
+
+	public static final String ADD_CATEGORY = "add_category";
+	public static final String CATEGORIES_LIST = "categories_list";
 }

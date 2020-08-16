@@ -18,8 +18,9 @@ public class Item
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
-	private String category;
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
 
 	@NotNull
 	private String model;
