@@ -7,7 +7,7 @@
 
     <div align="center">
         <h3>Podaj dane nowego przedmiotu</h3>
-        <form th:action="@{${T(com.mike.util.PageMappings).ADD_ITEM}(itemParams=${item.parameters})}"
+        <form th:action="@{${T(com.mike.util.PageMappings).ADD_ITEM}}"
               th:object="${item}" method="post" >
 
             <table class="table" id="myTable">
@@ -84,15 +84,13 @@
                             </select>
                         </td>
                         <td>
-                            <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_ITEM_PARAM}(itemId=${item.id}, itemParamId=${item.parameters[__${status.index}__].id})}">
+                            <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_ITEM_PARAM}(itemParamId=${item.parameters[__${status.index}__].id})}">
                                 <button type="submit" class="btn btn-danger" name="submit">Usuń parametr</button>
                             </form>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
-<!--            <button value="test" th:text="test" onclick="showAlert()">Test</button>-->
 
             <br><br><br>
             <input type="submit" value="Submit"/>

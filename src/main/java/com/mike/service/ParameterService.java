@@ -24,6 +24,9 @@ public class ParameterService
 	public Optional<Parameter> findById(Long id)
 	{
 		log.info("Find parameter by id: {}", id);
+		if (id==null)
+			return Optional.empty();
+
 		Optional<Parameter> parameter = parameterRepository.findById(id);
 		if (parameter == null)
 			return Optional.empty();

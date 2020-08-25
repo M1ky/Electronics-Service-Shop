@@ -47,8 +47,7 @@ public class ItemController
 	@GetMapping(PageMappings.ITEMS_LIST)
 	public String items(Model model)
 	{
-		Iterable<Item> items = itemService.findAll();
-		model.addAttribute("items", items);
+		model.addAttribute("items", itemService.findAll());
 		return ViewNames.ITEMS_LIST;
 	}
 
@@ -73,7 +72,6 @@ public class ItemController
 		model.addAttribute("categories", categories);
 	}
 
-	// TODO - add remove Param from Item functionality
 	@PostMapping(PageMappings.ADD_ITEM)
 	public String addNewItem(@ModelAttribute("item") Item item)
 	{
@@ -84,8 +82,9 @@ public class ItemController
 	@PostMapping(PageMappings.EDIT_ITEM)
 	public String editItem(@RequestParam Long itemId, Model model)
 	{
-		Optional<Item> existingItem = itemService.findById(itemId);
-		model.addAttribute("item", existingItem.isPresent() ? existingItem.get() : "");
+		itemService.findById(itemId).ifPresent(item -> {
+			model.addAttribute("item", item);
+		});
 
 		addAttributes(model);
 		return ViewNames.ADD_ITEM;
@@ -98,17 +97,34 @@ public class ItemController
 		return PageMappings.REDIRECT_ITEMS_LIST;
 	}
 
-	@PostMapping(PageMappings.DELETE_ITEM_PARAM)
-	public String deleteItemParam(@RequestParam Long itemId, @RequestParam Long itemParamId, Model model)
+	@GetMapping(PageMappings.DELETE_ITEM_PARAM)
+	public String deleteItemParamView(Long itemId, Model model)
 	{
-		Optional<Item> existingItem = itemService.findById(itemId);
-		Item item = existingItem.get();
-		Optional<Parameter> toBeRemoved = parameterService.findById(itemParamId);
+		itemService.findById(itemId).ifPresent(item -> {
+			model.addAttribute("item", item);
+		});
+		return ViewNames.DELETE_PARAM;
+	}
 
-		Set<Parameter> itemParameters = item.getParameters();
-		itemParameters.remove(toBeRemoved.get());
-		item.setParameters(itemParameters);
-		itemService.save(item);
+	@PostMapping(PageMappings.DELETE_ITEM_PARAM)
+	public String deleteItemParam(@RequestParam Long itemId, Long itemParamId, Model model)
+	{
+		if (itemParamId == null)
+		{
+			itemService.findById(itemId).ifPresent(item -> {
+				model.addAttribute("item", item);
+			});
+			return ViewNames.DELETE_PARAM;
+		}
+
+		itemService.findById(itemId).ifPresent(item -> {
+			parameterService.findById(itemParamId).ifPresent(toBeRemoved -> {
+				Set<Parameter> itemParameters = item.getParameters();
+				itemParameters.remove(toBeRemoved);
+				item.setParameters(itemParameters);
+				itemService.save(item);
+			});
+		});
 
 		return PageMappings.REDIRECT_ITEMS_LIST;
 	}
@@ -116,14 +132,12 @@ public class ItemController
 	@PostMapping(PageMappings.ADD_ITEM_PARAM)
 	public String addItemParam(@RequestParam Long itemId, Model model)
 	{
-		Optional<Item> existingItem = itemService.findById(itemId);
-		model.addAttribute("item", existingItem.isPresent() ? existingItem.get() : "");
+		itemService.findById(itemId).ifPresent(item -> {
+			model.addAttribute("item", item);
+		});
 
-		Iterable<Parameter> allParameters = parameterService.findAll();
-		model.addAttribute("allParameters", allParameters);
-
-		Parameter parameterToAdd = new Parameter();
-		model.addAttribute("paramToAdd", parameterToAdd);
+		model.addAttribute("allParameters", parameterService.findAll());
+		model.addAttribute("paramToAdd", new Parameter());
 
 		return ViewNames.ADD_ITEM_PARAM;
 	}
@@ -131,17 +145,14 @@ public class ItemController
 	@PostMapping(PageMappings.ADD_PARAM_TO_ITEM)
 	public String addParamToItem(@RequestParam Long itemId, @ModelAttribute("paramToAdd") Parameter paramToAdd)
 	{
-		Optional<Item> existingItem = itemService.findById(itemId);
-		Item item = existingItem.get();
-
-		Optional<Parameter> existingParam = parameterService.findById(paramToAdd.getId());
-		Parameter parameter = existingParam.get();
-
-		Set<Parameter> itemParameters = item.getParameters();
-		itemParameters.add(parameter);
-
-		item.setParameters(itemParameters);
-		itemService.save(item);
+		itemService.findById(itemId).ifPresent(item -> {
+			parameterService.findById(paramToAdd.getId()).ifPresent(parameter -> {
+				Set<Parameter> itemParameters = item.getParameters();
+				itemParameters.add(parameter);
+				item.setParameters(itemParameters);
+				itemService.save(item);
+			});
+		});
 
 		return PageMappings.REDIRECT_ITEMS_LIST;
 	}

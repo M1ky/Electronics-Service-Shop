@@ -3,10 +3,13 @@ package com.mike.util;
 public final class ViewNames
 {
 	public static final String HOME = "home";
+	public static final String ERROR = "error";
+
 
 	public static final String ADD_ITEM = "add_item";
 	public static final String ITEMS_LIST = "items_list";
 	public static final String ADD_ITEM_PARAM = "add_parameter_to_item";
+	public static final String DELETE_PARAM = "delete_param";
 
 
 	public static final String ADD_PARAMETER = "add_parameter";
@@ -19,7 +22,4 @@ public final class ViewNames
 
 	public static final String ADD_CATEGORY = "add_category";
 	public static final String CATEGORIES_LIST = "categories_list";
-
-
-	public static final String ERROR = "error";
 }

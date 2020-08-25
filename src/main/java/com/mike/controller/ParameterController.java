@@ -30,8 +30,7 @@ public class ParameterController
 	@GetMapping(PageMappings.PARAMETERS_LIST)
 	public String parameters(Model model)
 	{
-		Iterable<Parameter> parameters = parameterService.findAll();
-		model.addAttribute("parameters", parameters);
+		model.addAttribute("parameters", parameterService.findAll());
 		return ViewNames.PARAMETERS_LIST;
 	}
 
@@ -52,8 +51,10 @@ public class ParameterController
 	@PostMapping(PageMappings.EDIT_PARAMETER)
 	public String editParameter(@RequestParam Long parameterId, Model model)
 	{
-		Optional<Parameter> existingParameter = parameterService.findById(parameterId);
-		model.addAttribute("parameter", existingParameter.isPresent() ? existingParameter.get() : "");
+		parameterService.findById(parameterId).ifPresent(parameter -> {
+			model.addAttribute("parameter", parameter);
+		});
+
 		return ViewNames.ADD_PARAMETER;
 	}
 

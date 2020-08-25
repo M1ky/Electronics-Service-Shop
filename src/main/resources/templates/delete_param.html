@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navBarFragment}" />
+
+    <div align="center">
+        <h3>Podaj dane nowego przedmiotu</h3>
+            <table class="table" id="myTable">
+                <thead>
+                    <th>Nazwa</th>
+                    <th>Wartość</th>
+                </thead>
+                <tbody>
+                    <input type="hidden" th:field="${item.id}"/>
+
+                    <tr id="parametersList" th:each="parameter, status : ${item.parameters}">
+                        <td>
+                            <label for="params">Parametr</label>
+                        </td>
+                        <td>
+                            <select id="params" name="parameters">
+                                <option value="0">Wybierz status</option>
+                                <option type="number"
+                                        th:value="${parameter.id}"
+                                        th:text="${parameter.value} + ' : ' + ${parameter.description}"
+                                        th:field="${item.parameters[__${status.index}__]}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_ITEM_PARAM}(itemId=${item.id}, itemParamId=${item.parameters[__${status.index}__].id})}">
+                                <button type="submit" class="btn btn-danger" name="submit">Usuń parametr</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br><br><br>
+    </div>
+<div th:replace="~{fragments/footer :: footerFragment}" />
+</body>
+</html>

@@ -30,8 +30,7 @@ public class CategoryController
 	@GetMapping(PageMappings.CATEGORIES_LIST)
 	public String categories(Model model)
 	{
-		Iterable<Category> categories = categoryService.findAll();
-		model.addAttribute("categories", categories);
+		model.addAttribute("categories", categoryService.findAll());
 		return ViewNames.CATEGORIES_LIST;
 	}
 
@@ -52,8 +51,9 @@ public class CategoryController
 	@PostMapping(PageMappings.EDIT_CATEGORY)
 	public String editItem(@RequestParam Long categoryId, Model model)
 	{
-		Optional<Category> existingCategory = categoryService.findById(categoryId);
-		model.addAttribute("category", existingCategory.isPresent() ? existingCategory.get() : "");
+		categoryService.findById(categoryId).ifPresent(category -> {
+			model.addAttribute("category", category);
+		});
 
 		return ViewNames.ADD_CATEGORY;
 	}

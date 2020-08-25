@@ -20,7 +20,7 @@
             <th>Numer seryjny</th>
             <th>Status</th>
             <th>Parametry</th>
-            <th>Dodaj Parametr</th>
+            <th>Parametr</th>
             <th>Edytuj</th>
             <th>Usuń</th>
         </tr>
@@ -36,19 +36,22 @@
                 <p th:each="parameter : ${item.parameters}"
                    th:text="${parameter.value} + ' : ' + ${parameter.description}"></p>
             </td>
-            <td>
-                <form method="POST" th:action="@{${T(com.mike.util.PageMappings).ADD_ITEM_PARAM}(itemId=${item.id})}">
-                    <button type="submit" name="submit">Dodaj parametr</button>
+            <td style="width:12%">
+                <form style="float: left" method="POST" th:action="@{${T(com.mike.util.PageMappings).ADD_ITEM_PARAM}(itemId=${item.id})}">
+                    <button class="btn btn-success" type="submit" name="submit">Dodaj</button>
+                </form>
+                <form style="float: left" method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_ITEM_PARAM}(itemId=${item.id})}">
+                    <button class="btn btn-danger" type="submit" name="submit">Usuń</button>
                 </form>
             </td>
             <td>
                 <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_ITEM}(itemId=${item.id})}">
-                    <button type="submit" name="submit">Edytuj</button>
+                    <button class="btn btn-primary" type="submit" name="submit">Edytuj</button>
                 </form>
             </td>
             <td>
                 <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_ITEM}(itemId=${item.id})}">
-                    <button type="submit" name="submit">Usuń</button>
+                    <button class="btn btn-danger" type="submit" name="submit">Usuń</button>
                 </form>
             </td>
         </tr>

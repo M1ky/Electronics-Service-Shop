@@ -31,8 +31,7 @@ public class StatusController
 	@GetMapping(PageMappings.STATUSES_LIST)
 	public String statuses(Model model)
 	{
-		Iterable<Status> statuses = statusService.findAll();
-		model.addAttribute("statuses", statuses);
+		model.addAttribute("statuses", statusService.findAll());
 		return ViewNames.STATUES_LIST;
 	}
 
@@ -53,8 +52,10 @@ public class StatusController
 	@PostMapping(PageMappings.EDIT_STATUS)
 	public String editStatus(@RequestParam Long statusId, Model model)
 	{
-		Optional<Status> existingStatus = statusService.findById(statusId);
-		model.addAttribute("status", existingStatus.isPresent() ? existingStatus.get() : "");
+		statusService.findById(statusId).ifPresent(status -> {
+			model.addAttribute("status", status);
+		});
+
 		return ViewNames.ADD_STATUS;
 	}
 
