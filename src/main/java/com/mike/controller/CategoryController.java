@@ -1,7 +1,6 @@
 package com.mike.controller;
 
 import com.mike.db.entities.Category;
-import com.mike.db.entities.Item;
 import com.mike.service.CategoryService;
 import com.mike.util.PageMappings;
 import com.mike.util.ViewNames;
@@ -46,22 +45,7 @@ public class CategoryController
 	@PostMapping(PageMappings.ADD_CATEGORY)
 	public String addCategoryPost(@ModelAttribute("category") Category category)
 	{
-		if (category.getId() == null)
-		{
-			categoryService.save(category);
-			return PageMappings.REDIRECT_CATEGORIES_LIST;
-		}
-
-		Optional<Category> existingCategoryOptional = categoryService.findById(category.getId());
-		if  (existingCategoryOptional.isEmpty())
-		{
-			log.info("Did not find category with id: {}, in database.", category.getId());
-			return PageMappings.REDIRECT_CATEGORIES_LIST;
-		}
-		Category existingCategory = existingCategoryOptional.get();
-		existingCategory.setCategoryValue(category.getCategoryValue());
-		categoryService.save(existingCategory);
-
+		categoryService.save(category);
 		return PageMappings.REDIRECT_CATEGORIES_LIST;
 	}
 
@@ -69,7 +53,7 @@ public class CategoryController
 	public String editItem(@RequestParam Long categoryId, Model model)
 	{
 		Optional<Category> existingCategory = categoryService.findById(categoryId);
-		model.addAttribute("item", existingCategory.isPresent() ? existingCategory.get() : "");
+		model.addAttribute("category", existingCategory.isPresent() ? existingCategory.get() : "");
 
 		return ViewNames.ADD_CATEGORY;
 	}

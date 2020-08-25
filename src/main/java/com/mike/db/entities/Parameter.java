@@ -22,9 +22,7 @@ public class Parameter
 	@NotNull
 	private String description;
 
-	@ManyToMany(
-			mappedBy = "parameters"
-	)
+	@ManyToMany
 	private Set<Item> items;
 
 	public Parameter()

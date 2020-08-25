@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navBarFragment}" />
+
+    <div align="center">
+        <form th:action="@{${T(com.mike.util.PageMappings).ADD_PARAM_TO_ITEM}(itemId=${item.id})}"
+              th:object="${paramToAdd}" method="post" >
+            <table class="table" id="myTable">
+                <thead>
+                <th>Nazwa</th>
+                <th>Wartość</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="parameter">Parametr</label>
+                        </td>
+                        <td>
+                            <select id="parameter" name="parameter" th:object="${paramToAdd}" th:field="*{id}">
+                                <option value="0">Wybierz parametr</option>
+                                <option type="number" th:each="parameter, status : ${allParameters}"
+                                        th:value="${parameter.id}"
+                                        th:text="${parameter.value} + ' : ' + ${parameter.description}"
+                                ></option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br><br><br>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+
+<div th:replace="~{fragments/footer :: footerFragment}" />
+</body>
+</html>

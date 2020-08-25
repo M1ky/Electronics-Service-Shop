@@ -46,22 +46,7 @@ public class StatusController
 	@PostMapping(PageMappings.ADD_STATUS)
 	public String addNewStatus(@ModelAttribute("status") Status status)
 	{
-		if (status.getId() == null)
-		{
-			statusService.save(status);
-			return PageMappings.REDIRECT_STATUSES_LIST;
-		}
-
-		Optional<Status> existingStatusOptional = statusService.findById(status.getId());
-		if  (existingStatusOptional.isEmpty())
-		{
-			log.info("Did not find status with id: {}, in database.", status.getId());
-			return PageMappings.REDIRECT_STATUSES_LIST;
-		}
-		Status existingStatus = existingStatusOptional.get();
-		existingStatus.setStatusVal(status.getStatusVal());
-		statusService.save(existingStatus);
-
+		statusService.save(status);
 		return PageMappings.REDIRECT_STATUSES_LIST;
 	}
 

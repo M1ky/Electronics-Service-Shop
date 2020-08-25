@@ -22,9 +22,9 @@ public class ElectronicsController
 		this.electronicsService = electronicsService;
 	}
 
-	@GetMapping(PageMappings.ABOUT)
-	public String about()
+	@GetMapping(PageMappings.ERROR)
+	public String error()
 	{
-		return ViewNames.ABOUT;
+		return  ViewNames.ERROR;
 	}
 }

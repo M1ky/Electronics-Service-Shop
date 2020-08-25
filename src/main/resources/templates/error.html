@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navBarFragment}" />
+    <div align="center">
+        <h1>Whoops!</h1>
+        <p>Coś poszło nie tak po naszej stronie</p>
+        <a class="nav-link" th:href="@{__${T(com.mike.util.PageMappings).HOME}__}"> Proszę spróbować ponownie </a>
+    </div>
+
+
+    <div th:replace="~{fragments/footer :: footerFragment}" />
+</body>
+</html>

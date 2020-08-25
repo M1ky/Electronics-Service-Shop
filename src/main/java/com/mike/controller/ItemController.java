@@ -12,6 +12,7 @@ import com.mike.util.PageMappings;
 import com.mike.util.ViewNames;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.View;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -62,35 +67,17 @@ public class ItemController
 		model.addAttribute("statuses", statuses);
 
 		Iterable<Parameter> parameters = parameterService.findAll();
-		model.addAttribute("parameters", parameters);
+		model.addAttribute("allParameters", parameters);
 
 		Iterable<Category> categories = categoryService.findAll();
 		model.addAttribute("categories", categories);
 	}
 
+	// TODO - add remove Param from Item functionality
 	@PostMapping(PageMappings.ADD_ITEM)
 	public String addNewItem(@ModelAttribute("item") Item item)
 	{
-		if (item.getId() == null)
-		{
-			itemService.save(item);
-			return PageMappings.REDIRECT_ITEMS_LIST;
-		}
-
-		Optional<Item> existingItemOptional = itemService.findById(item.getId());
-		if  (existingItemOptional.isEmpty())
-		{
-			log.info("Did not find item with id: {}, in database.", item.getId());
-			return PageMappings.REDIRECT_ITEMS_LIST;
-		}
-		Item existingItem = existingItemOptional.get();
-		existingItem.setCategory(item.getCategory());
-		existingItem.setComment(item.getComment());
-		existingItem.setModel(item.getModel());
-		existingItem.setSerialNr(item.getSerialNr());
-		existingItem.setStatus(item.getStatus());
-		itemService.save(existingItem);
-
+		itemService.save(item);
 		return PageMappings.REDIRECT_ITEMS_LIST;
 	}
 
@@ -108,6 +95,54 @@ public class ItemController
 	public String deleteItem(@RequestParam Long itemId)
 	{
 		itemService.deleteById(itemId);
+		return PageMappings.REDIRECT_ITEMS_LIST;
+	}
+
+	@PostMapping(PageMappings.DELETE_ITEM_PARAM)
+	public String deleteItemParam(@RequestParam Long itemId, @RequestParam Long itemParamId, Model model)
+	{
+		Optional<Item> existingItem = itemService.findById(itemId);
+		Item item = existingItem.get();
+		Optional<Parameter> toBeRemoved = parameterService.findById(itemParamId);
+
+		Set<Parameter> itemParameters = item.getParameters();
+		itemParameters.remove(toBeRemoved.get());
+		item.setParameters(itemParameters);
+		itemService.save(item);
+
+		return PageMappings.REDIRECT_ITEMS_LIST;
+	}
+
+	@PostMapping(PageMappings.ADD_ITEM_PARAM)
+	public String addItemParam(@RequestParam Long itemId, Model model)
+	{
+		Optional<Item> existingItem = itemService.findById(itemId);
+		model.addAttribute("item", existingItem.isPresent() ? existingItem.get() : "");
+
+		Iterable<Parameter> allParameters = parameterService.findAll();
+		model.addAttribute("allParameters", allParameters);
+
+		Parameter parameterToAdd = new Parameter();
+		model.addAttribute("paramToAdd", parameterToAdd);
+
+		return ViewNames.ADD_ITEM_PARAM;
+	}
+
+	@PostMapping(PageMappings.ADD_PARAM_TO_ITEM)
+	public String addParamToItem(@RequestParam Long itemId, @ModelAttribute("paramToAdd") Parameter paramToAdd)
+	{
+		Optional<Item> existingItem = itemService.findById(itemId);
+		Item item = existingItem.get();
+
+		Optional<Parameter> existingParam = parameterService.findById(paramToAdd.getId());
+		Parameter parameter = existingParam.get();
+
+		Set<Parameter> itemParameters = item.getParameters();
+		itemParameters.add(parameter);
+
+		item.setParameters(itemParameters);
+		itemService.save(item);
+
 		return PageMappings.REDIRECT_ITEMS_LIST;
 	}
 }

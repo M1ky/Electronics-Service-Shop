@@ -45,23 +45,7 @@ public class ParameterController
 	@PostMapping(PageMappings.ADD_PARAMETER)
 	public String addParameter(@ModelAttribute("parameter") Parameter parameter)
 	{
-		if (parameter.getId() == null)
-		{
-			parameterService.save(parameter);
-			return PageMappings.REDIRECT_PARAMETERS_LIST;
-		}
-
-		Optional<Parameter> existingParameterOptional = parameterService.findById(parameter.getId());
-		if (existingParameterOptional.isEmpty())
-		{
-			log.info("Did not find parameter with id: {}", parameter.getId());
-			return PageMappings.REDIRECT_PARAMETERS_LIST;
-		}
-		Parameter existingParameter = existingParameterOptional.get();
-		existingParameter.setDescription(parameter.getDescription());
-		existingParameter.setValue(parameter.getValue());
-		parameterService.save(existingParameter);
-
+		parameterService.save(parameter);
 		return PageMappings.REDIRECT_PARAMETERS_LIST;
 	}
 
