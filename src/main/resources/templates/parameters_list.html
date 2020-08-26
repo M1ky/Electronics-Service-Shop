@@ -26,12 +26,12 @@
 		<td th:text="${parameter.description}"></td>
 		<td>
 			<form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_PARAMETER}(parameterId=${parameter.id})}">
-				<button type="submit" name="submit">Edytuj</button>
+				<button class="btn btn-primary" type="submit" name="submit">Edytuj</button>
 			</form>
 		</td>
 		<td>
 			<form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_PARAMETER}(parameterId=${parameter.id})}">
-				<button type="submit" name="submit">Usuń</button>
+				<button class="btn btn-danger" type="submit" name="submit">Usuń</button>
 			</form>
 		</td>
 	</tr>

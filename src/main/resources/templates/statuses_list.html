@@ -24,12 +24,12 @@
             <td th:text="${status.statusVal}"></td>
             <td>
                 <form method="POST" th:action="@{${T(com.mike.util.PageMappings).EDIT_STATUS}(statusId=${status.id})}">
-                    <button type="submit" name="submit">Edytuj</button>
+                    <button class="btn btn-primary" type="submit" name="submit">Edytuj</button>
                 </form>
             </td>
             <td>
                 <form method="POST" th:action="@{${T(com.mike.util.PageMappings).DELETE_STATUS}(statusId=${status.id})}">
-                    <button type="submit" name="submit">Usuń</button>
+                    <button class="btn btn-danger" type="submit" name="submit">Usuń</button>
                 </form>
             </td>
         </tr>
