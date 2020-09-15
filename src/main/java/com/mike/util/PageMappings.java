@@ -6,6 +6,7 @@ public final class PageMappings
 	public static final String ERROR = "error";
 	public static final String LOGOUT = "logout";
 
+
 	// == ITEMS ==
 	public static final String ITEMS_LIST = "items_list";
 	public static final String ADD_ITEM = "add_item";
